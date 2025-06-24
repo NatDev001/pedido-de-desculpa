@@ -31,7 +31,7 @@ body {
     */
 
     background: var(--bg-mobile) no-repeat top center/cover;
-    
+    height: 100vh;
 }
 
 body * {
@@ -44,7 +44,8 @@ p {
 }
 
 #container {
-    width: 360px;
+    width: 100%;
+    max-width: 588px;
 /*    border: 1px solid red;*/
     margin: 56px auto 0;
     padding: 0 24px;
@@ -165,4 +166,15 @@ ul li a:hover{
 footer {
     padding: 24px 0;
     text-align: center;
+}
+
+@media (min-width: 700px) {
+  :root {
+    --bg-mobile: url(./assets/assets/bg-desktop.jpg);
+  }
+
+  .light {
+    --bg-mobile: url(./assets/assets/bg-desktop-light.jpg);
+  }
+
 }
