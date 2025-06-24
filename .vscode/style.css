@@ -87,6 +87,7 @@ p {
     top: 50%;
     z-index: 1;
     transform: translateY(-50%);
+    animation: slide-out 0.2s;
 }
 
 #switch span{
@@ -98,11 +99,17 @@ p {
     background: var(--color-fundo);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+
 }
 
 .light #switch button{
     right: 0;
     left: initial;
+    animation: slide-in 0.2s forwards;
+}
+
+#switch button:hover {
+    outline: 8px solid var(--color);
 }
 
 /*lista*/
@@ -177,4 +184,22 @@ footer {
     --bg-mobile: url(./assets/assets/bg-desktop-light.jpg);
   }
 
+}
+
+@keyframes slide-out {
+    from {
+        left: 50%;
+    }
+    to {
+        left: 0;
+    }
+}
+
+@keyframes slide-in {
+    from {
+        left: 0;
+    }
+    to {
+        left: 50%;
+    }
 }
