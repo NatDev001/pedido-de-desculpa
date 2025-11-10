@@ -144,6 +144,13 @@
     #btn-nao {
       background-color: #f0f0f0;
       color: #555;
+      background-size: cover;
+      background-position: center;
+      transition: top 0.5s ease, left 0.5s ease, box-shadow 0.2s;
+    }
+
+    #btn-nao.correndo {
+        position: fixed;
     }
 
     #btn-sim:hover, #btn-nao:hover {

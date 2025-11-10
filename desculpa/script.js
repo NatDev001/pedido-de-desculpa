@@ -6,6 +6,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnNao = document.getElementById("btn-nao");
 
   let initialVideoPlayed = false;
+  let movimentoIniciado = false;
+  let intervaloMovimento = null;
 
   const listaMedia = [
     "videos/IMG-20251108-WA0164.jpg",
@@ -35,6 +37,15 @@ document.addEventListener('DOMContentLoaded', () => {
     "videos/VID-20251108-WA0043.mp4",
   ];
 
+  function moverBotao() {
+    const maxX = window.innerWidth - btnNao.offsetWidth;
+    const maxY = window.innerHeight - btnNao.offsetHeight;
+    const novoX = Math.random() * maxX;
+    const novoY = Math.random() * maxY;
+    btnNao.style.left = `${novoX}px`;
+    btnNao.style.top = `${novoY}px`;
+  }
+
   video.addEventListener('ended', () => {
     if (video.src.includes('dsclp.mp4')) {
       initialVideoPlayed = true;
@@ -43,6 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btnNao.addEventListener("click", () => {
+    if (!movimentoIniciado) {
+      movimentoIniciado = true;
+      intervaloMovimento = setInterval(moverBotao, 1200)
+      btnNao.classList.add("correndo");
+    }
+    moverBotao();
+
     const novoMedia = listaMedia[Math.floor(Math.random() * listaMedia.length)];
 
     video.classList.remove('active');
@@ -87,6 +105,13 @@ document.addEventListener('DOMContentLoaded', () => {
       video.classList.remove('active');
       imageDisplay.classList.remove('active');
       initialVideoPlayed = false;
+      // Reset button position and movement
+      if (movimentoIniciado) {
+        clearInterval(intervaloMovimento);
+        movimentoIniciado = false;
+        btnNao.style.left = '';
+        btnNao.style.top = '';
+      }
     }
   });
 });
