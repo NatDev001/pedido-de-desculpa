@@ -4,7 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const imageDisplay = document.getElementById('image-display');
   const botoesContainer = document.querySelector('.botoes-container');
   const btnNao = document.getElementById("btn-nao");
+  const btnSim = document.getElementById("btn-sim");
   const runAnimation = document.getElementById('run-animation');
+  const miau = document.getElementById('miau');
+  const ahee = document.getElementById('ahee');
+
+
 
   const runFrames = [
     "run/run0000.png",
@@ -16,10 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
   ];
 
   let currentFrame = 0;
-  setInterval(() => {
+  let animationSpeed = 85;
+  let moveFrequency = 1000;
+  let animationInterval = setInterval(() => {
     currentFrame = (currentFrame + 1) % runFrames.length;
     runAnimation.src = runFrames[currentFrame];
-  }, 100);
+  }, animationSpeed);
 
   let initialVideoPlayed = false;
   let movimentoIniciado = false;
@@ -72,13 +79,37 @@ document.addEventListener('DOMContentLoaded', () => {
     botoesContainer.classList.add('visible');
   });
 
+  btnSim.addEventListener("click", () => {
+    video.pause();
+    miau.pause();
+    ahee.muted = false;
+    ahee.play();
+    ahee.style.opacity = '1';
+  });
+
+
   btnNao.addEventListener("click", () => {
     runAnimation.style.display = 'block';
+
+    miau.play();
+
+    animationSpeed *= 0.9;
+    moveFrequency *= 0.9;
+
+    clearInterval(animationInterval);
+    animationInterval = setInterval(() => {
+      currentFrame = (currentFrame + 1) % runFrames.length;
+      runAnimation.src = runFrames[currentFrame];
+    }, animationSpeed);
+
     if (!movimentoIniciado) {
       movimentoIniciado = true;
-      intervaloMovimento = setInterval(moverBotao, 1000)
       btnNao.classList.add("correndo");
     }
+    
+    clearInterval(intervaloMovimento);
+    intervaloMovimento = setInterval(moverBotao, moveFrequency);
+
     moverBotao();
 
     const novoMedia = listaMedia[Math.floor(Math.random() * listaMedia.length)];
@@ -112,6 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   envelope.addEventListener('click', () => {
     envelope.classList.toggle('open');
+
+    miau.pause();
+
+    ahee.muted = true;
+    ahee.pause();
+    ahee.style.opacity = '0';
 
     if (envelope.classList.contains('open')) {
       video.classList.add('active');
