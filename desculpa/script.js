@@ -4,6 +4,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const imageDisplay = document.getElementById('image-display');
   const botoesContainer = document.querySelector('.botoes-container');
   const btnNao = document.getElementById("btn-nao");
+  const runAnimation = document.getElementById('run-animation');
+
+  const runFrames = [
+    "run/run0000.png",
+    "run/run0001.png",
+    "run/run0002.png",
+    "run/run0003.png",
+    "run/run0004.png",
+    "run/run0005.png",
+  ];
+
+  let currentFrame = 0;
+  setInterval(() => {
+    currentFrame = (currentFrame + 1) % runFrames.length;
+    runAnimation.src = runFrames[currentFrame];
+  }, 100);
 
   let initialVideoPlayed = false;
   let movimentoIniciado = false;
@@ -44,6 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const novoY = Math.random() * maxY;
     btnNao.style.left = `${novoX}px`;
     btnNao.style.top = `${novoY}px`;
+
+    runAnimation.style.left = `${novoX}px`;
+    runAnimation.style.top = `${novoY + btnNao.offsetHeight}px`;
   }
 
   video.addEventListener('ended', () => {
@@ -54,9 +73,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   btnNao.addEventListener("click", () => {
+    runAnimation.style.display = 'block';
     if (!movimentoIniciado) {
       movimentoIniciado = true;
-      intervaloMovimento = setInterval(moverBotao, 1200)
+      intervaloMovimento = setInterval(moverBotao, 1000)
       btnNao.classList.add("correndo");
     }
     moverBotao();
@@ -102,6 +122,8 @@ document.addEventListener('DOMContentLoaded', () => {
       video.pause();
       video.currentTime = 0;
       botoesContainer.classList.remove('visible');
+      runAnimation.style.display = 'none';
+      btnNao.classList.remove("correndo");
       video.classList.remove('active');
       imageDisplay.classList.remove('active');
       initialVideoPlayed = false;
