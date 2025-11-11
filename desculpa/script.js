@@ -151,6 +151,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ahee.style.opacity = '0';
 
     if (envelope.classList.contains('open')) {
+      video.load();
       video.classList.add('active');
       setTimeout(() => {
         video.play();
